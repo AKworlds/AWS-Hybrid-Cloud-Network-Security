@@ -1,0 +1,31 @@
+# VPC
+aws ec2 create-vpc --cidr-block 10.20.0.0/16
+
+# Public subnet
+aws ec2 create-subnet \
+  --vpc-id <VPC-ID> \
+  --cidr-block 10.20.1.0/24
+
+# Application subnet
+aws ec2 create-subnet \
+  --vpc-id <VPC-ID> \
+  --cidr-block 10.20.10.0/24
+
+# Database subnet
+aws ec2 create-subnet \
+  --vpc-id <VPC-ID> \
+  --cidr-block 10.20.20.0/24
+
+# Internet Gateway
+aws ec2 create-internet-gateway
+
+# NAT Gateway
+aws ec2 allocate-address --domain vpc
+aws ec2 create-nat-gateway \
+  --subnet-id <PUBLIC-SUBNET-ID> \
+  --allocation-id <EIP-ALLOCATION-ID>
+
+# Route tables
+# Public -> Internet Gateway
+# App -> NAT Gateway
+# DB -> local route only

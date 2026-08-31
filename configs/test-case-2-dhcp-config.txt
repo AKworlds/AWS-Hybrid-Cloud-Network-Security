@@ -1,0 +1,23 @@
+# VLAN 10 DHCP
+set service dhcp-server shared-network-name VLAN10-ADMIN subnet 192.168.10.0/24 subnet-id 10
+set service dhcp-server shared-network-name VLAN10-ADMIN subnet 192.168.10.0/24 option default-router 192.168.10.1
+set service dhcp-server shared-network-name VLAN10-ADMIN subnet 192.168.10.0/24 option name-server 8.8.8.8
+set service dhcp-server shared-network-name VLAN10-ADMIN subnet 192.168.10.0/24 range POOL start 192.168.10.20
+set service dhcp-server shared-network-name VLAN10-ADMIN subnet 192.168.10.0/24 range POOL stop 192.168.10.200
+
+# VLAN 20 DHCP
+set service dhcp-server shared-network-name VLAN20-DESIGN subnet 192.168.20.0/24 subnet-id 20
+set service dhcp-server shared-network-name VLAN20-DESIGN subnet 192.168.20.0/24 option default-router 192.168.20.1
+set service dhcp-server shared-network-name VLAN20-DESIGN subnet 192.168.20.0/24 option name-server 8.8.8.8
+set service dhcp-server shared-network-name VLAN20-DESIGN subnet 192.168.20.0/24 range POOL start 192.168.20.20
+set service dhcp-server shared-network-name VLAN20-DESIGN subnet 192.168.20.0/24 range POOL stop 192.168.20.200
+
+# VLAN 30 DHCP
+set service dhcp-server shared-network-name VLAN30-SERVERS subnet 192.168.30.0/24 subnet-id 30
+set service dhcp-server shared-network-name VLAN30-SERVERS subnet 192.168.30.0/24 option default-router 192.168.30.1
+set service dhcp-server shared-network-name VLAN30-SERVERS subnet 192.168.30.0/24 option name-server 8.8.8.8
+set service dhcp-server shared-network-name VLAN30-SERVERS subnet 192.168.30.0/24 range POOL start 192.168.30.20
+set service dhcp-server shared-network-name VLAN30-SERVERS subnet 192.168.30.0/24 range POOL stop 192.168.30.200
+
+commit
+save

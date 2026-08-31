@@ -1,0 +1,61 @@
+# Network groups
+
+set firewall group network-group ADMIN network 192.168.10.0/24
+set firewall group network-group DESIGN network 192.168.20.0/24
+set firewall group network-group SERVERS network 192.168.30.0/24
+set firewall group network-group MGMT network 192.168.99.0/24
+
+set firewall group address-group SRV1 address 192.168.30.10
+
+# Rule 10 - Admin to SRV1 permitted
+set firewall ipv4 forward filter rule 10 action accept
+set firewall ipv4 forward filter rule 10 description "ADMIN to SRV1 permitted"
+set firewall ipv4 forward filter rule 10 source group network-group ADMIN
+set firewall ipv4 forward filter rule 10 destination group address-group SRV1
+
+# Rule 20 - Admin denied to Management
+set firewall ipv4 forward filter rule 20 action drop
+set firewall ipv4 forward filter rule 20 description "ADMIN denied to MGMT"
+set firewall ipv4 forward filter rule 20 source group network-group ADMIN
+set firewall ipv4 forward filter rule 20 destination group network-group MGMT
+set firewall ipv4 forward filter rule 20 log
+
+# Rule 30 - Admin denied to Design
+set firewall ipv4 forward filter rule 30 action drop
+set firewall ipv4 forward filter rule 30 description "ADMIN denied to DESIGN"
+set firewall ipv4 forward filter rule 30 source group network-group ADMIN
+set firewall ipv4 forward filter rule 30 destination group network-group DESIGN
+set firewall ipv4 forward filter rule 30 log
+
+# Rule 40 - Design to SRV1 TCP/445 permitted
+set firewall ipv4 forward filter rule 40 action accept
+set firewall ipv4 forward filter rule 40 source group network-group DESIGN
+set firewall ipv4 forward filter rule 40 destination group address-group SRV1
+set firewall ipv4 forward filter rule 40 protocol tcp
+set firewall ipv4 forward filter rule 40 destination port 445
+
+# Rule 50 - Other Design to SRV1 traffic denied
+set firewall ipv4 forward filter rule 50 action drop
+set firewall ipv4 forward filter rule 50 source group network-group DESIGN
+set firewall ipv4 forward filter rule 50 destination group address-group SRV1
+set firewall ipv4 forward filter rule 50 log
+
+# Rule 60 - Design denied to Management
+set firewall ipv4 forward filter rule 60 action drop
+set firewall ipv4 forward filter rule 60 source group network-group DESIGN
+set firewall ipv4 forward filter rule 60 destination group network-group MGMT
+set firewall ipv4 forward filter rule 60 log
+
+# Rule 70 - Design denied to Admin
+set firewall ipv4 forward filter rule 70 action drop
+set firewall ipv4 forward filter rule 70 source group network-group DESIGN
+set firewall ipv4 forward filter rule 70 destination group network-group ADMIN
+set firewall ipv4 forward filter rule 70 log
+
+# Rule 900 - Established / Related
+set firewall ipv4 forward filter rule 900 action accept
+set firewall ipv4 forward filter rule 900 state established
+set firewall ipv4 forward filter rule 900 state related
+
+commit
+save

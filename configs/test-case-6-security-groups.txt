@@ -1,0 +1,16 @@
+# DB security group allows MySQL/database traffic only from SG-APP
+
+aws ec2 authorize-security-group-ingress \
+  --group-id <DB-SECURITY-GROUP-ID> \
+  --protocol tcp \
+  --port 3306 \
+  --source-group <APP-SECURITY-GROUP-ID>
+
+# DB1 test listener
+sudo python3 -m http.server 3306 &
+
+# Authorized test
+curl http://10.20.20.10:3306
+
+# Unauthorized test
+curl http://10.20.20.10:3306

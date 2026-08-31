@@ -1,0 +1,31 @@
+# Create Virtual Private Gateway
+aws ec2 create-vpn-gateway \
+  --type ipsec.1 \
+  --tag-specifications \
+  'ResourceType=vpn-gateway,Tags=[{Key=Name,Value=NorthStar-VGW}]'
+
+# Attach VGW
+aws ec2 attach-vpn-gateway \
+  --vpn-gateway-id <VGW-ID> \
+  --vpc-id <VPC-ID>
+
+# Create Customer Gateway
+aws ec2 create-customer-gateway \
+  --type ipsec.1 \
+  --public-ip <PUBLIC-IP> \
+  --bgp-asn 65000 \
+  --tag-specifications \
+  'ResourceType=customer-gateway,Tags=[{Key=Name,Value=NorthStar-CGW}]'
+
+# Create Site-to-Site VPN
+aws ec2 create-vpn-connection \
+  --type ipsec.1 \
+  --customer-gateway-id <CGW-ID> \
+  --vpn-gateway-id <VGW-ID> \
+  --options StaticRoutesOnly=true
+
+# Static on-prem routes
+192.168.10.0/24
+192.168.20.0/24
+192.168.30.0/24
+192.168.99.0/24
