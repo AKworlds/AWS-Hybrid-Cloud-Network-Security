@@ -6,7 +6,7 @@ The project demonstrates VLAN segmentation, DHCP, firewall policies, AWS VPC des
 
 ## Architecture
 
-![Hybrid Network Architecture](diagrams/full-network-diagram.png)
+![Hybrid Network Architecture](diagrams/NetDesign_.png)
 
 ## Network Design
 
